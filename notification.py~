@@ -7,7 +7,7 @@ import pynotify
 import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(('127.0.0.1',1234))
+sock.bind(('127.0.0.1',5559))
 sock.listen(1)
 while 1:
 	conn = sock.accept()[0]
