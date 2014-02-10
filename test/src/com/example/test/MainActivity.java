@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.app.NotificationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,8 +19,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button b;
 	EditText text;
 	Socket sock;
-	DataOutputStream dout;
+	//DataOutputStream dout;
 	String str;
+    PrintWriter pw;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class MainActivity extends Activity implements OnClickListener {
         
         
     }
+
+
   
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,21 +48,28 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 	try{
-		dout = new DataOutputStream(sock.getOutputStream());
+		//dout = new DataOutputStream(sock.getOutputStream());
+        pw = new PrintWriter(sock.getOutputStream(),true);
 		str = text.getText().toString();
-		dout.writeUTF(str);
-		text.setText("Successfully send");	
+		//dout.writeUTF(str);
+        pw.println(str);
+      
+               
+		text.setText("Send Successfully");
+
 	}
 	catch(Exception e)
 	{
 		
 	}
 	}
-	class sendNotification extends AsyncTask<Void,Void,Void>{
+
+
+    class sendNotification extends AsyncTask<Void,Void,Void>{
 		@Override
 		protected Void doInBackground(Void... params) {
 			try{
-				sock =  new Socket("10.0.2.2",5558);
+				sock =  new Socket("10.0.2.2",5559);
 			}
 			catch(Exception e)
 			{
